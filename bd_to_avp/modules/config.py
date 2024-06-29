@@ -292,6 +292,11 @@ class Config:
             help="Audio bitrate for transcoding in kilobits.",
         )
         parser.add_argument(
+            "--upscale-video-bitrate",
+            type=int,
+            help="Bitrate for MV-HEVC upscale in megabits.",
+        )
+        parser.add_argument(
             "--skip-freaking-subtitles-because-I-dont-care",
             "--skip-subtitles",
             action="store_true",

@@ -152,12 +152,14 @@ class MainWindow(QMainWindow):
         self.resolution_entry = LabeledLineEdit(
             "Resolution (Blank uses source)", config.resolution, DiscInfo.resolution
         )
+        self.upscale_bitrate_entry = LabeledLineEdit("Upscaled Video Bitrate (Mbps, blank is automatic)", config.video_bitrate, "")
 
         config_layout.addWidget(self.audio_bitrate_spinbox)
         config_layout.addWidget(self.mv_hevc_quality_spinbox)
         config_layout.addWidget(self.fov_spinbox)
         config_layout.addWidget(self.frame_rate_entry)
         config_layout.addWidget(self.resolution_entry)
+        config_layout.addWidget(self.upscale_bitrate_entry)
 
     def create_misc_options(self, config_layout: QVBoxLayout) -> None:
 
@@ -166,7 +168,7 @@ class MainWindow(QMainWindow):
         self.keep_files_checkbox = self.create_checkbox("Keep Temporary Files", config.keep_files)
         self.output_commands_checkbox = self.create_checkbox("Output Commands", config.output_commands)
         self.software_encoder_checkbox = self.create_checkbox("Use Software Encoder", config.software_encoder)
-        self.fx_upscale_checkbox = self.create_checkbox("AI FX Upscale (2x resolution)", config.fx_upscale)
+        self.fx_upscale_checkbox = self.create_checkbox("AI FX Upscale (2x resolution)", config.fx_upscale, self.toggle_upscale)
         self.remove_original_checkbox = self.create_checkbox("Remove Original", config.remove_original)
         self.overwrite_checkbox = self.create_checkbox("Overwrite", config.overwrite)
         self.transcode_audio_checkbox = self.create_checkbox(
@@ -348,6 +350,7 @@ class MainWindow(QMainWindow):
         self.fov_spinbox.set_value(config.fov)
         self.frame_rate_entry.set_text(config.frame_rate)
         self.resolution_entry.set_text(config.resolution)
+        self.upscale_bitrate_entry.set_text(config.upscale_video_bitrate)
         self.crop_black_bars_checkbox.setChecked(config.crop_black_bars)
         self.swap_eyes_checkbox.setChecked(config.swap_eyes)
         self.keep_files_checkbox.setChecked(config.keep_files)
@@ -427,6 +430,7 @@ class MainWindow(QMainWindow):
         config.fov = self.fov_spinbox.value()
         config.frame_rate = self.frame_rate_entry.text()
         config.resolution = self.resolution_entry.text()
+        config.upscale_video_bitrate = self.upscale_bitrate_entry.text()
         config.crop_black_bars = self.crop_black_bars_checkbox.isChecked()
         config.swap_eyes = self.swap_eyes_checkbox.isChecked()
         config.keep_files = self.keep_files_checkbox.isChecked()
@@ -499,3 +503,6 @@ class MainWindow(QMainWindow):
 
     def toggle_transcode(self) -> None:
         self.audio_bitrate_spinbox.setEnabled(self.transcode_audio_checkbox.isChecked())
+
+    def toggle_upscale(self) -> None:
+        self.upscale_bitrate_entry.setEnabled(self.fx_upscale_checkbox.isChecked())

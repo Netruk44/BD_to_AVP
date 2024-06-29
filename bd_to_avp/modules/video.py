@@ -207,6 +207,15 @@ def upscale_file(input_path: Path) -> None:
         config.FX_UPSCALE_PATH,
         input_path,
     ]
+
+    try:
+        upscale_bitrate = int(config.upscale_video_bitrate)
+        # Option is in Mbps, convert to bps
+        upscale_bitrate *= 1000000
+        upscale_command += ["--bitrate", str(upscale_bitrate)]
+    except ValueError:
+        pass
+
     run_command(upscale_command, "Upscale video with FX Upscale plugin.")
 
     if not config.keep_files:
