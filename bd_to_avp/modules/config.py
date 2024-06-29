@@ -178,6 +178,7 @@ class Config:
         self.overwrite = False
         self.transcode_audio = False
         self.audio_bitrate = 384
+        self.upscale_video_bitrate = ""
         self.left_right_bitrate = 20
         self.mv_hevc_quality = 75
         self.fov = 90

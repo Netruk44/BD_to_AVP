@@ -152,7 +152,7 @@ class MainWindow(QMainWindow):
         self.resolution_entry = LabeledLineEdit(
             "Resolution (Blank uses source)", config.resolution, DiscInfo.resolution
         )
-        self.upscale_bitrate_entry = LabeledLineEdit("Upscaled Video Bitrate (Mbps, blank is automatic)", config.video_bitrate, "")
+        self.upscale_bitrate_entry = LabeledSpinBox("Upscaled Video Bitrate (Mbps, 0 is automatic)", default_value=config.upscale_video_bitrate)
 
         config_layout.addWidget(self.audio_bitrate_spinbox)
         config_layout.addWidget(self.mv_hevc_quality_spinbox)
